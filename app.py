@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from flask_json_schema import JsonSchema
 from validation import validate_query_params
 from models import User, Location, search_users
 

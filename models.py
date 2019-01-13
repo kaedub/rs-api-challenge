@@ -1,4 +1,4 @@
-from dist import lat_long_dist
+from distance import lat_long_dist
 from csv import DictReader
 
 csv_filename = 'users.csv'
