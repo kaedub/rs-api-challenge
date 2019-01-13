@@ -33,15 +33,21 @@ class User(object):
         self.locations.append(location)
 
     def matches(self, location, gender, dist, origin, min_age, max_age):
+        if dist and origin:
+            dist_from_origin = lat_long_dist(origin, (location.lat, location.long))
+            if dist_from_origin > dist:
+                return False
 
-        dist_from_origin = lat_long_dist(origin, (location.lat, location.long))
+        if gender:
+            if gender != self.gender:
+                return False
+        if max_age:
+            if self.age > max_age:
+                return False
+        if min_age:
+            if self.age < min_age:
+                return False
 
-        if gender != self.gender and gender != None:
-            return False
-        if dist_from_origin > dist:
-            return False
-        if self.age > max_age or self.age < min_age:
-            return False
         return True
 
     def json(self):
