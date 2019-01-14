@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
 from validation import validate_query_params
 from models import User, Location, search_users
+import platform
+
+from flask_sqlalchemy import SQLAlchemy
+
 
 def create_app(test_config=None):
     """create and configure the app"""
@@ -21,3 +25,7 @@ def create_app(test_config=None):
         })
     
     return app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(debug=True, host='0.0.0.0')
