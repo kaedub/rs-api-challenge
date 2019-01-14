@@ -1,14 +1,23 @@
 from flask import Flask, request, jsonify
 from validation import validate_query_params
-from models import User, Location, search_users
-import platform
+from models import db, connect_db, User, Location, search_users
 
-from flask_sqlalchemy import SQLAlchemy
+
+
 
 
 def create_app(test_config=None):
     """create and configure the app"""
     app = Flask(__name__, instance_relative_config=True)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///rsapi'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ECHO'] = True
+    app.config['SECRET_KEY'] = 'dev'
+
+    connect_db(app)
+    # db.create_all()
+
 
     @app.route('/users')
     @validate_query_params
