@@ -31,6 +31,7 @@ class User(db.Model):
     )
     locations = db.relationship('LocationModel', backref='user')
 
+
 class Location(db.Model):
     __tablename__ = 'locations'
 
