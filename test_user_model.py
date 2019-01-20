@@ -1,19 +1,19 @@
-"""Model unit tests."""
+"""Unit tests for User model"""
 
 # run the tests with this command
 #
 #    python3 -m unittest
 
 import os
-from unittest import TestCase
+import unittest
 from models import db, User, Location
 from generate import seed_db
 
 
 from app import create_app
 
-class ScheduleModelTestCase(TestCase):
-    """Test schedule model."""
+class UserModelTestCase(unittest.TestCase):
+    """Test User model."""
 
     def setUp(self):
         """Create test client, add sample data."""
@@ -22,6 +22,8 @@ class ScheduleModelTestCase(TestCase):
 
         db.drop_all()
         db.create_all()
+
+        seed_db()
         
         db.session.commit()
 
@@ -43,9 +45,9 @@ class ScheduleModelTestCase(TestCase):
         db.session.add(user2)
         db.session.commit()
 
-        user1 = User.query.first()
-        user2 = User.query.get(2)
-
+        user1 = User.query.filter_by(name='Nicholas Cage').first()
+        user2 = User.query.filter_by(name='James Bond').first()
+        
         self.assertEqual(user1.name, 'Nicholas Cage')
         self.assertEqual(user1.age, 49)
         self.assertEqual(user1.gender, 'm')
@@ -53,7 +55,26 @@ class ScheduleModelTestCase(TestCase):
         self.assertEqual(user2.name, 'James Bond')
         self.assertEqual(user2.age, 62)
         self.assertEqual(user2.gender, 'm')
-    
+
+    def test_update(self):
+        """Test create user"""
+
+        user = User(name='Nicholas Cage', age=49, gender='m')
+        
+        db.session.add(user)
+        db.session.commit()
+
+        user = User.query.filter_by(name='Nicholas Cage').first()
+
+        user.age = 52
+
+        db.session.add(user)
+        db.session.commit()
+
+        user = User.query.filter_by(name='Nicholas Cage').first()
+
+        self.assertEqual(user.age, 52)
+
     def test_delete(self):
         """Test create user"""
 
@@ -62,17 +83,35 @@ class ScheduleModelTestCase(TestCase):
         db.session.add(user)
         db.session.commit()
 
-        user = User.query.first()
+        user = User.query.filter_by(name='Nicholas Cage').first()
 
         self.assertEqual(user.name, 'Nicholas Cage')
-        self.assertEqual(user.age, 49)
-        self.assertEqual(user.gender, 'm')
         
         user.query.delete()
-
         db.session.commit()
 
-        result = User.query.first()
+        result = User.query.filter_by(name='Nicholas Cage').first()
 
+        self.assertIsNone(result)
+
+    def test_cascade_delete(self):
+        """Test create user"""
+
+        user = User.query.filter_by(name='Taylor Swift').first()
+
+        location = Location(
+            city="San Francisco",
+            latitude=37.69841,
+            longitude=-122.454232)
+        
+        user.locations.append(location)
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        user.query.delete()
+        db.session.commit()
+
+        result = User.query.filter_by(name='Taylor Swift').first()
 
         self.assertIsNone(result)
