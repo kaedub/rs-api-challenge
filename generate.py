@@ -9,7 +9,7 @@ app = create_app()
 
 csv_filename = 'users.csv'
 
-def seed_db(filename):
+def seed_db(filename='users.csv'):
     with open(filename) as file:
         reader = DictReader(file)
         for row in reader:
@@ -27,13 +27,13 @@ def seed_db(filename):
                 age=age)
 
 
-            # location = Location(
-            #     city=city,
-            #     latitude=latitude,
-            #     longitude=longitude,
-            #     user_id=user.id)
+            location = Location(
+                city=city,
+                latitude=latitude,
+                longitude=longitude,
+                user_id=user.id)
 
-            # user.locations.append(location)
+            user.locations.append(location)
 
             db.session.add(user)
             db.session.commit()
