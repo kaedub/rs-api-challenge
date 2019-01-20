@@ -17,15 +17,14 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = (db.Column, db.String)
-    gender = (db.Column, db.String)
-    age = (db.Column, db.Integer)
+    name = db.Column(db.Unicode)
+    gender = db.Column(db.String)
+    age = db.Column(db.Integer)
 
     locations = db.relationship('Location', backref='user')
 
-    def __rep__(self):
-        return f'<User name={self.name} gender={self.gender} \
-            age={self.age}'
+    def __repr__(self):
+        return f'<User name={self.name} gender={self.gender} age={self.age}>'
 
 
 class Location(db.Model):
@@ -39,7 +38,7 @@ class Location(db.Model):
     longitude = db.Column(db.Float)
     user_id = db.Column(
         db.Integer, 
-        db.ForeignKey('users.id'),
+        db.ForeignKey('users.id', ondelete='CASCADE'),
         nullable=False)
 
 
