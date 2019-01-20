@@ -27,17 +27,16 @@ def seed_db(filename):
                 age=age)
 
 
-            location = Location(
-                city=city,
-                latitude=latitude,
-                longitude=longitude,
-                user_id=user.id
-            )
+            # location = Location(
+            #     city=city,
+            #     latitude=latitude,
+            #     longitude=longitude,
+            #     user_id=user.id)
 
-            user.locations.append(location)
+            # user.locations.append(location)
 
             db.session.add(user)
-        db.session.commit()
+            db.session.commit()
 
 if __name__ == "__main__":
     db.create_all()
@@ -45,3 +44,4 @@ if __name__ == "__main__":
         seed_db(sys.argv[1])
     else:
         seed_db(csv_filename)
+        db.session.commit()

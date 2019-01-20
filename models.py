@@ -12,47 +12,31 @@ def connect_db(app):
     db.init_app(app)
 
 class User(db.Model):
-    """Connection of a follower <-> followee."""
+    """Represents a user"""
 
     __tablename__ = 'users'
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-    )
-    name = db.Column(
-        db.String
-    )
-    age = db.Column(
-        db.Integer
-    )
-    gender = db.Column(
-        db.String
-    )
-    locations = db.relationship('LocationModel', backref='user')
+    id = db.Column(db.Integer, primary_key=True)
+    name = (db.Column, db.String)
+    gender = (db.Column, db.String)
+    age = (db.Column, db.Integer)
+
+    locations = db.relationship('Location', backref='user')
 
 
 class Location(db.Model):
+    """Represents a location"""
+
     __tablename__ = 'locations'
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-    )
-    city = db.Column(
-        db.String
-    )
-    latitude = db.Column(
-        db.Float
-    )
-    longitude = db.Column(
-        db.Float
-    )
+    id = db.Column(db.Integer, primary_key=True)
+    city = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     user_id = db.Column(
-        db.Integer,
+        db.Integer, 
         db.ForeignKey('users.id'),
-        nullable=False
-    )
+        nullable=False)
 
 
 
