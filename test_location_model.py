@@ -48,14 +48,12 @@ class LocationModelTestCase(unittest.TestCase):
         location1 = Location(
             city="Los Angeles",
             latitude=34.063566,
-            longitude=-118.421092,
-            )
+            longitude=-118.421092)
         
         location2 = Location(
             city="San Francisco",
             latitude=37.69841,
-            longitude=-122.454232,
-            )
+            longitude=-122.454232)
     
         user.locations.extend([location1, location2])
 
@@ -72,3 +70,47 @@ class LocationModelTestCase(unittest.TestCase):
         self.assertEqual(location.city, 'Los Angeles')
         self.assertEqual(location.latitude, 34.062264)
         self.assertEqual(location.longitude, -118.340361)
+
+    def test_delete(self):
+
+        location = Location.query.filter_by(user_id=1).first()
+        user = User.query.filter_by(id=1).first()
+
+        location = Location(
+            city="Los Angeles",
+            latitude=34.063566,
+            longitude=-118.421092)
+
+        user.locations.append(location)
+        num_locations = len(user.locations)
+
+        db.session.add(user)
+        db.session.commit()
+        
+        location.query.delete()
+        db.session.commit()
+
+        user = User.query.filter_by(id=1).first()
+        self.assertLess(len(user.locations), num_locations)
+
+    def test_cascade_delete(self):
+        """Test create user"""
+
+        user = User.query.filter_by(name='Taylor Swift').first()
+
+        location = Location(
+            city="San Francisco",
+            latitude=37.69841,
+            longitude=-122.454232)
+        
+        user.locations.append(location)
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        user.query.delete()
+        db.session.commit()
+
+        result = User.query.filter_by(name='Taylor Swift').first()
+
+        self.assertIsNone(result)
