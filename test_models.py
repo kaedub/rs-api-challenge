@@ -23,8 +23,6 @@ class ScheduleModelTestCase(TestCase):
         db.drop_all()
         db.create_all()
         
-        # seed_db('users.csv')
-
         db.session.commit()
 
         self.client = app.test_client()
@@ -35,21 +33,26 @@ class ScheduleModelTestCase(TestCase):
         db.session.commit()
         db.drop_all()
     
-    def test_read_and_write(self):
+    def test_create_and_read(self):
         """Test create user"""
 
-        nick = User(name='Nicholas Cage', age=49, gender='m')
+        user1 = User(name='Nicholas Cage', age=49, gender='m')
+        user2 = User(name='James Bond', age=62, gender='m')
         
-        db.session.add(nick)
+        db.session.add(user1)
+        db.session.add(user2)
         db.session.commit()
 
-        users = User.query.all()
-        print(dir(users[0]))
-        [self.assertEqual(user.name, 'hello') for user in users]
+        user1 = User.query.first()
+        user2 = User.query.get(2)
 
-        # self.assertEqual(user.name, 'Nicholas Cage')
-        # self.assertEqual(user.age, 49)
-        # self.assertEqual(user.gender, 'm')
+        self.assertEqual(user1.name, 'Nicholas Cage')
+        self.assertEqual(user1.age, 49)
+        self.assertEqual(user1.gender, 'm')
+
+        self.assertEqual(user2.name, 'James Bond')
+        self.assertEqual(user2.age, 62)
+        self.assertEqual(user2.gender, 'm')
     
     def test_delete(self):
         """Test create user"""
@@ -61,47 +64,15 @@ class ScheduleModelTestCase(TestCase):
 
         user = User.query.first()
 
-        # self.assertEqual(user.name, 'Nicholas Cage')
-        # self.assertEqual(user.age, 49)
-        # self.assertEqual(user.gender, 'm')
-
-
-
+        self.assertEqual(user.name, 'Nicholas Cage')
+        self.assertEqual(user.age, 49)
+        self.assertEqual(user.gender, 'm')
         
-# class FeedingModelTestCase(TestCase):
-#     """Test feeding model."""
+        user.query.delete()
 
-#     def setUp(self):
-#         """Create test client, add sample data."""
-        
-#         app = create_app()
+        db.session.commit()
 
-#         db.drop_all()
-#         db.create_all()
-
-#         self.client = app.test_client()
-
-#     def tearDown(self):
-#         """Drops database tables"""        
-
-#         db.session.commit()
-#         db.drop_all()
-    
-#     def test_feeding_model(self):
-#         """Does basic model work?"""
-
-#         schedule = Schedule.query.all()[0]
-
-#         feedings = [Feeding(schedule_id=schedule.id, order=n) for n in range(1,13)]
-#         schedule.feedings = feedings
-        
-#         db.session.add(schedule)
-#         db.session.commit()
-
-#         feedings = [Feeding.query.get_or_404(f.id) for f in feedings]
-
-#         for i, feeding in enumerate(feedings):
-#             self.assertEqual(feeding.order, i+1)
-#             self.assertEqual(feeding.schedule.id, schedule.id)
+        result = User.query.first()
 
 
+        self.assertIsNone(result)

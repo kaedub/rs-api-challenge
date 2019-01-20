@@ -23,6 +23,10 @@ class User(db.Model):
 
     locations = db.relationship('Location', backref='user')
 
+    def __rep__(self):
+        return f'<User name={self.name} gender={self.gender} \
+            age={self.age}'
+
 
 class Location(db.Model):
     """Represents a location"""
