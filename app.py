@@ -8,7 +8,7 @@ def create_app(test_config=None):
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///rsapi'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_ECHO'] = False
+    app.config['SQLALCHEMY_ECHO'] = True
     app.config['SECRET_KEY'] = 'dev'
 
     connect_db(app)
