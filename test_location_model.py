@@ -44,7 +44,7 @@ class LocationModelTestCase(unittest.TestCase):
         db.session.commit()
 
         user = User.query.filter_by(name='Nicholas Cage').first()
-
+        
         location1 = Location(
             city="Los Angeles",
             latitude=34.063566,

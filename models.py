@@ -23,8 +23,8 @@ class User(db.Model):
 
     locations = db.relationship('Location', backref='user')
 
-    def __rep__(self):
-        return f'<User name={self.name} gender={self.gender} age={self.age}'
+    def __repr__(self):
+        return f'<User name={self.name} gender={self.gender} age={self.age} locations={self.locations}>'
 
 
 class Location(db.Model):
@@ -40,6 +40,21 @@ class Location(db.Model):
         db.Integer, 
         db.ForeignKey('users.id', ondelete="CASCADE"),
         nullable=False)
+
+    def __repr__(self):
+        return f'<Location id={self.id} city={self.city} latitude={self.latitude} longitude={self.longitude}>'
+    
+    def json(self):
+       return {
+            "type": "Feature",
+            "properties": {
+                "city": self.city
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [self.latitude, self.longitude]
+            }
+        } 
 
 
 
