@@ -115,3 +115,23 @@ class UserModelTestCase(unittest.TestCase):
         result = User.query.filter_by(name='Taylor Swift').first()
 
         self.assertIsNone(result)
+
+    def test_match(self):
+        """Test match users"""
+        
+        origin = [39.99112,-76.870215]
+        distance = 300
+        min_age = 20
+        gender = 'm'
+        max_age = 50
+        users = User.match(
+            origin=origin,
+            distance=distance,
+            # gender=gender,
+            # min_age=min_age,
+            # max_age=max_age
+        )
+        
+        [print(user) for user in users]
+        print(len(users))
+        

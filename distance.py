@@ -1,6 +1,6 @@
 from math import sin, cos, sqrt, atan2, radians
 
-def lat_long_dist(c1, c2):
+def coord_distance(c1, c2):
     """Calculate the distance between two latitude-longtide points.
     This solution is pasted from 'Michael0x2a' answer at 
     https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude"""

@@ -5,4 +5,15 @@ user_id,user_name,user_age,user_gender,last_location,lat,long
 3,Emma Watson,28,f,Los Angeles,34.062264,-118.340361
 3,Emma Watson,28,f,Daly City,37.68941,-122.462532
 4,Emilia Clarke,30,f,Los Angeles,34.043566,-118.391092
+4,Emilia Clarke,30,f,San Diego,32.963521,-121.985737
 5,Chris Martin,40,m,"Whitestone, UK",0,0
+6,Tyler The Creator,27,m,Los Angeles,34.033279,-118.310775
+6,Tyler The Creator,27,m,San Francisco,37.719667,-122.421037
+6,Tyler The Creator,27,m,San Diego,32.962739,-121.985537
+7,Tom Cruise,55,m,San Diego,32.826432,-121.993267
+7,Tom Cruise,55,m,Los Angeles,34.099521,-118.290775
+7,Tom Cruise,55,m,Washington-DC,38.89102,-76.941006
+7,Tom Cruise,55,m,Oakland,37.825612,-122.269782
+8,Will Smith,51,m,Los Angeles,37.825612,-122.269782
+8,Will Smith,51,m,New York City,39.99112,-76.870215
+
