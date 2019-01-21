@@ -4,10 +4,10 @@
 
 Write an API endpoint that returns a filtered set of users from the csv provided below.
 
-* Your API endpoint URL is /users
-* Your API responds in the above format with valid GeoJSON
-* Your API should correctly filter any combination of API parameters
-* Your API should utilize a datastore
+* Your API endpoint URL is /users ✓
+* Your API responds in the above format with valid GeoJSON ✓
+* Your API should correctly filter any combination of API parameters ✓
+* Your API should utilize a datastore ✓
 * Your API should support paginating the number of resulting users
 
 ## API Structure
