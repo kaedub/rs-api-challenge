@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from validation import validate_query_params
-from models import db, connect_db, User, Location, search_users
+from models import db, connect_db, User, Location
 
 def create_app(test_config=None):
     """create and configure the app"""
