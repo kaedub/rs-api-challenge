@@ -18,7 +18,7 @@ def create_app(test_config=None):
     @app.route('/users')
     @validate_query_params
     def users():
-        results = search_users(request.args)
+        results = User.match(request.args)
         query_params = {key:val for key,val in request.args.items() if val}
         return jsonify({
             "metadata": {
@@ -26,7 +26,7 @@ def create_app(test_config=None):
                 "query": query_params
             },
             "num_results": len(results),
-            "results": results
+            "results": [result.json() for result in results]
         })
     
     return app
