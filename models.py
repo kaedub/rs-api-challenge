@@ -39,6 +39,7 @@ class User(db.Model):
             query = query.filter(User.gender == gender)
         users = query.all()
         if origin and distance:
+            # this is a brute force solution, needs refactor
             users = [user for user in users if any([coord_distance(origin, [loc.latitude,loc.longitude]) <= distance for loc in user.locations])]
         return users
 
