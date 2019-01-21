@@ -123,15 +123,15 @@ class UserModelTestCase(unittest.TestCase):
         distance = 300
         min_age = 20
         gender = 'm'
-        max_age = 50
+        max_age = 54
+
         users = User.match(
             origin=origin,
             distance=distance,
-            # gender=gender,
-            # min_age=min_age,
-            # max_age=max_age
+            gender=gender,
+            min_age=min_age,
+            max_age=max_age
         )
         
-        [print(user) for user in users]
-        print(len(users))
+        self.assertEqual(users)
         
