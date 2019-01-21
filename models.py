@@ -1,4 +1,4 @@
-from distance import lat_long_dist
+from distance import coord_distance
 from flask_sqlalchemy import SQLAlchemy
 
 from csv import DictReader
@@ -18,14 +18,47 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    gender = db.Column(db.String)
     age = db.Column(db.Integer)
+    gender = db.Column(db.String)
 
     locations = db.relationship('Location', backref='user')
 
     def __repr__(self):
-        return f'<User name={self.name} gender={self.gender} age={self.age} locations={self.locations}>'
+        return f'<User name={self.name} gender={self.gender} age={self.age}>'
 
+    @classmethod
+    def match(cls, origin=None, distance=None, gender=None, min_age=0, max_age=None):
+        """Return users that match given age range, gender, or distance from origin"""
+        query = User.query
+
+        if origin and distance:
+            Location.query.filter()
+
+        if min_age > 0:
+            query = query.filter(User.age >= min_age)
+        if max_age:
+            query = query.filter(User.age <= max_age)
+        if gender:
+            query = query.filter(User.gender == gender)
+        users = query.all()
+        if origin and distance:
+            users = [user for user in users if any([coord_distance(origin, [loc.latitude,loc.longitude]) <= distance for loc in user.locations])]
+        return users
+
+    def json(self):
+        return {
+            "type": "user",
+            "locationHistory": {
+                "type": "FeatureCollection",
+                "features": list(map(lambda loc: loc.json(), self.locations))
+            },
+            "properties": {
+                "id": self.id,
+                "name": self.name,
+                "age": self.age,
+                "gender": self.gender
+            }
+        }
 
 class Location(db.Model):
     """Represents a location"""
@@ -36,6 +69,7 @@ class Location(db.Model):
     city = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+
     user_id = db.Column(
         db.Integer, 
         db.ForeignKey('users.id', ondelete="CASCADE"),
@@ -43,7 +77,7 @@ class Location(db.Model):
 
     def __repr__(self):
         return f'<Location id={self.id} city={self.city} latitude={self.latitude} longitude={self.longitude}>'
-    
+
     def json(self):
        return {
             "type": "Feature",
@@ -89,7 +123,7 @@ class UserModel(object):
 
     def matches(self, location, gender, dist, origin, min_age, max_age):
         if dist and origin:
-            dist_from_origin = lat_long_dist(origin, (location.lat, location.long))
+            dist_from_origin = coord_distance(origin, (location.lat, location.long))
             if dist_from_origin > dist:
                 return False
 
@@ -130,7 +164,6 @@ def search_users(queries):
             user = matched.get(row.get('user_name')) or UserModel(**row)
             location = LocationModel(row.get('last_location'), row.get('lat'), row.get('long'))
             if user.matches(location, **queries):
-
                 if matched.get(user.name):
                     city = row.get('last_location')
                     lat = row.get('lat')
