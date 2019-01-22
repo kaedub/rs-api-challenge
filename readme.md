@@ -6,7 +6,7 @@ This is an single endpoint API that will return a list of users filtered by gend
 
 This program uses `Python 3.7` with `Flask 1.0.2` and `PostgreSQL 11.1`
 
-### To run this program
+### To run this program locally
 
 __1. Start up a virtual environment__  
 `python3 -m venv venv`  
@@ -26,7 +26,9 @@ __5. To run program__
 or  
 `python app.py`
 
+__6. Make a request to the API__
 
+`curl http://localhost:5000/users?gender=f&dist=100&origin=37.774929,-122.419416&min_age=21&max_age=29`
 
 ### What’s Required
 
