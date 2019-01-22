@@ -55,7 +55,7 @@ class User(db.Model):
 
         if queries.get('origin') and queries.get('distance'):
             # this is a brute force solution, needs refactor
-            users = [user for user in users if any([coord_distance(origin, [loc.latitude,loc.longitude]) <= distance for loc in user.locations])]
+            users = [user for user in users if any([coord_distance(queries.get('origin'), [loc.latitude,loc.longitude]) <= queries.get('distance') for loc in user.locations])]
         return users
 
     def json(self):

@@ -125,13 +125,15 @@ class UserModelTestCase(unittest.TestCase):
         gender = 'm'
         max_age = 54
 
-        users = User.match(
-            origin=origin,
-            distance=distance,
-            gender=gender,
-            min_age=min_age,
-            max_age=max_age
-        )
+        queries = {
+            'origin': origin,
+            'distance': distance,
+            'gender': gender,
+            'min_age': min_age,
+            'max_age': max_age
+        }
+
+        users = User.match(queries)
         
         self.assertEqual(users[0].name, 'Will Smith')
         
