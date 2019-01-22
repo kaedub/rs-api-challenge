@@ -133,5 +133,5 @@ class UserModelTestCase(unittest.TestCase):
             max_age=max_age
         )
         
-        self.assertEqual(users)
+        self.assertEqual(users[0].name, 'Will Smith')
         
