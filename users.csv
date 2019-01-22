@@ -16,4 +16,13 @@ user_id,user_name,user_age,user_gender,last_location,lat,long
 7,Tom Cruise,55,m,Oakland,37.825612,-122.269782
 8,Will Smith,51,m,Los Angeles,37.825612,-122.269782
 8,Will Smith,51,m,New York City,39.99112,-76.870215
-
+9,Master P,49,m,New Orleans,29.977248,-90.065530
+9,Master P,49,m,New Orleans,34.061684,-118.358802
+10,Leonardo DiCaprio,Los Angeles,34.105115,-118.332912
+10,Leonardo DiCaprio,Palo Alto,37.420047,-122.150454
+11,Bill Murray,San Francisco,37.759161,-122.478284
+11,Bill Murray,San Francisco,35.107377,-120.623618
+12,Cameron Diaz,Santa Barbara,34.424899,-119.666388
+12,Cameron Diaz,San Francisco,37.666008,-122.435722
+12,Cameron Diaz,Baltimore,39.269894,-76.643195
+13,John Goodman,Philadephia,39.957102,-75.207336
