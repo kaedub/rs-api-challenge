@@ -24,7 +24,7 @@ __4. Populate database from users.csv__
 __5. To run program__  
 `flask run`  
 or  
-`python app.py
+`python app.py`
 
 __6. Make a request to the API__
 
