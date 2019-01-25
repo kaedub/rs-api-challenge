@@ -1,4 +1,4 @@
-from distance import filter_by_distance
+from distance import coord_distance
 from flask_sqlalchemy import SQLAlchemy
 
 from csv import DictReader
@@ -32,8 +32,6 @@ class User(db.Model):
         
         page = queries.get('page',1)
         per_page = queries.get('per_page',10)
-        origin = queries.get('origin')
-        distance = queries.get('dist')
 
         if per_page > 20:
             per_page = 20
@@ -49,22 +47,15 @@ class User(db.Model):
         if queries.get('gender'):
             query = query.filter(User.gender == queries.get('gender'))
         
-
-        # Filter by distance must come before pagination.
-        # There is no way to know how many records to query if
-        # the distance has not been filtered yet.
         pagination = query.paginate(
             page=queries.get('page'), 
             per_page=queries.get('per_page'))
         
         users = pagination.items
 
-        print('od', origin, distance)
-        if origin and distance:
+        if queries.get('origin') and queries.get('distance'):
             # this is a brute force solution, needs refactor
-            print('origin, distance')
-            users = filter_by_distance(users, origin, distance)
-        
+            users = [user for user in users if any([coord_distance(queries.get('origin'), [loc.latitude,loc.longitude]) <= queries.get('distance') for loc in user.locations])]
         return users
 
     def json(self):
@@ -99,9 +90,6 @@ class Location(db.Model):
 
     def __repr__(self):
         return f'<Location id={self.id} city={self.city} latitude={self.latitude} longitude={self.longitude}>'
-
-    def coords(self):
-        return [self.latitude, self.longitude]
 
     def json(self):
        return {
