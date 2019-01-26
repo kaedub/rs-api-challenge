@@ -1,6 +1,36 @@
-# API Design Challenge
 
-## What’s Required
+
+## API Design Challenge
+
+This is an single endpoint API that will return a list of users filtered by gender, age, or distance from an origin.
+
+This program uses `Python 3.7` with `Flask 1.0.2` and `PostgreSQL 11.1`
+
+### To run this program locally
+
+__1. Start up a virtual environment__  
+`python3 -m venv venv`  
+`source ./venv/bin/activate`  
+
+__2. Install dependencies__  
+`pip install -r requirements.txt`
+
+__3. Create database__  
+`createdb rsapi`
+
+__4. Populate database from users.csv__  
+`python generate.py`
+
+__5. To run program__  
+`flask run`  
+or  
+`python app.py`
+
+__6. Make a request to the API__
+
+`curl http://localhost:5000/users?gender=f&dist=100&origin=37.774929,-122.419416&min_age=21&max_age=29`
+
+### What’s Required
 
 Write an API endpoint that returns a filtered set of users from the csv provided below.
 
@@ -10,7 +40,7 @@ Write an API endpoint that returns a filtered set of users from the csv provided
 * Your API should utilize a datastore ✓
 * Your API should support paginating the number of resulting users ✓
 
-## API Structure
+### API Structure
 
 | Parameter | Description                                    |
 | --------- | ---------------------------------------------- |
@@ -19,6 +49,8 @@ Write an API endpoint that returns a filtered set of users from the csv provided
 | origin    | lat/long string of your location               |
 | min_age   | Minimum age preference                         |
 | max_age   | Maximum age preference                         |
+| page      | Page number                                    |
+| per_page  | Items per page                                 |
 
 Given the following request:
 
