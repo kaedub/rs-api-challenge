@@ -1,6 +1,8 @@
 
 
-## API Design Challenge
+# API Design Challenge
+
+## Instruction
 
 This is an single endpoint API that will return a list of users filtered by gender, age, or distance from an origin.
 
@@ -35,6 +37,8 @@ __6. Make a request to the API__
  * Data model refactor to improve search when paginating
  * Authentication
  * Refactor distance calculations to use Haversine
+
+## The Challenge
 
 ### What’s Required
 
