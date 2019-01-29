@@ -30,6 +30,12 @@ __6. Make a request to the API__
 
 `curl http://localhost:5000/users?gender=f&dist=100&origin=37.774929,-122.419416&min_age=21&max_age=29`
 
+### Coming soon
+ * Basic CRUD operations
+ * Data model refactor to improve search when paginating
+ * Authentication
+ * Refactor distance calculations to use Haversine
+
 ### What’s Required
 
 Write an API endpoint that returns a filtered set of users from the csv provided below.
