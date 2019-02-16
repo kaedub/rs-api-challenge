@@ -30,7 +30,7 @@ class User(db.Model):
     def match(cls,queries):
         """Return users that match given age range, gender, or distance from origin"""
         
-        page = queries.get('page',1)
+        page = queries.get('page', 1)
         per_page = queries.get('per_page',10)
 
         if per_page > 20:
@@ -40,22 +40,23 @@ class User(db.Model):
 
         query = User.query
 
-        if queries.get('min_age') > 0:
+        if queries.get('min_age', 0):
             query = query.filter(User.age >= queries.get('min_age'))
         if queries.get('max_age'):
             query = query.filter(User.age <= queries.get('max_age'))
         if queries.get('gender'):
             query = query.filter(User.gender == queries.get('gender'))
         
+        print('page', page)
         pagination = query.paginate(
-            page=queries.get('page'), 
-            per_page=queries.get('per_page'))
+            page=page, 
+            per_page=per_page)
         
         users = pagination.items
-
-        if queries.get('origin') and queries.get('distance'):
+        print('users', len(users))
+        # if queries.get('origin') and queries.get('distance'):
             # this is a brute force solution, needs refactor
-            users = [user for user in users if any([coord_distance(queries.get('origin'), [loc.latitude,loc.longitude]) <= queries.get('distance') for loc in user.locations])]
+            # users = [user for user in users if any([coord_distance(queries.get('origin'), [loc.latitude,loc.longitude]) <= queries.get('distance') for loc in user.locations])]
         return users
 
     def json(self):
