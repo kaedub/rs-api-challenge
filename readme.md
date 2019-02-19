@@ -32,11 +32,6 @@ __6. Make a request to the API__
 
 `curl http://localhost:5000/users?gender=f&dist=100&origin=37.774929,-122.419416&min_age=21&max_age=29`
 
-### Coming soon
- * Basic CRUD operations
- * Data model refactor to improve search when paginating
- * Authentication
- * Refactor distance calculations to use Haversine
 
 ## The Challenge
 
@@ -123,3 +118,9 @@ The expected response should contain the following:
 All query parameters are optional. If a query parameter is missing or the value is invalid, you should skip the related filter.
 
 All minimum and maximum fields should be inclusive (e.g. min_age=21&max_age=23 should return users with an age of 21, 22, or 23).
+
+### To-do List
+ * Basic CRUD operations for user and location data
+ * Data model refactor to improve search when paginating
+ * Authentication
+ * Integration tests
