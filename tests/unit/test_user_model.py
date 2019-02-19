@@ -135,5 +135,26 @@ class UserModelTestCase(unittest.TestCase):
 
         users = User.match(queries)
         
-        self.assertEqual(users[0].name, 'Will Smith')
+        self.assertEqual(users[0].name, 'Chris Martin')
+        
+    def test_pagination(self):
+        """Test user pagination"""
+        
+        page = 1
+        queries = {'page': page}
+
+        users = User.match(queries)
+        self.assertEqual(len(users), 10)
+
+        page = 2
+        queries = {'page': page}
+
+        users = User.match(queries)
+        self.assertEqual(len(users), 6)
+
+        page = 3
+        queries = {'page': page}
+
+        users = User.match(queries)
+        self.assertEqual(len(users), 6)
         
